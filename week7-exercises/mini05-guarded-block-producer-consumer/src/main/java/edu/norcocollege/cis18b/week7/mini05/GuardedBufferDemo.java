@@ -8,11 +8,16 @@ public class GuardedBufferDemo {
         OneSlotMessageBuffer buffer = new OneSlotMessageBuffer();
         List<String> messages = List.of("alpha", "beta", "gamma");
 
+        // The producer adds messages to the one-slot buffer.
         Thread producer = new Thread(() -> produce(messages, buffer), "producer");
+
+        // The consumer removes the same number of messages from the buffer.
         Thread consumer = new Thread(() -> consume(messages.size(), buffer), "consumer");
 
         producer.start();
         consumer.start();
+
+        // Wait for both threads to finish before ending the program.
         producer.join();
         consumer.join();
     }
