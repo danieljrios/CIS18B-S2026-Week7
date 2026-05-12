@@ -5,6 +5,8 @@ import java.util.List;
 public class LivenessDiagnosisLab {
 
     public static void main(String[] args) {
+        // Print each scenario name with its diagnosed liveness issue.
+        // The List order is fixed, so the output stays deterministic.
         for (LivenessScenario scenario : scenarios()) {
             System.out.println(scenario.name() + " -> " + scenario.issue());
         }
