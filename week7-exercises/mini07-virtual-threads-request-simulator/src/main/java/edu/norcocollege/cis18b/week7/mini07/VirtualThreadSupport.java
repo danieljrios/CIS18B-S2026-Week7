@@ -13,6 +13,8 @@ public final class VirtualThreadSupport {
 
     public static boolean isAvailable() {
         try {
+            // Java 21 has Executors.newVirtualThreadPerTaskExecutor().
+            // Reflection lets this project still compile on Java 17.
             Executors.class.getMethod("newVirtualThreadPerTaskExecutor");
             return true;
         } catch (NoSuchMethodException ex) {
@@ -26,6 +28,7 @@ public final class VirtualThreadSupport {
         }
 
         try {
+            // Call Executors.newVirtualThreadPerTaskExecutor() only when it exists.
             Method factory = Executors.class.getMethod("newVirtualThreadPerTaskExecutor");
             return (ExecutorService) factory.invoke(null);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
